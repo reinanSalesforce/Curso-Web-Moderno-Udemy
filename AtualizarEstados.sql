@@ -11,4 +11,4 @@ WHERE sigla = 'PR'
 
 -- Consulta com apelido na tabela no exemplo está o "estados" e logo depois uma sigla para informar que pode ser também chamado de estados
  
-select est.nome, est.sigla, est.populacao from estados est where sigla = 'PR' 
+select est.nome, est.sigla, est.populacao from estados est where sigla = 'PR'
