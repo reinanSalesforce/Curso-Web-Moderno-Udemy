@@ -1,0 +1,1 @@
+//pop - remove o ultimo elemento 
