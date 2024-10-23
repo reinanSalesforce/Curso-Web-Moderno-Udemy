@@ -1,5 +1,7 @@
 // Criei um index.js, pois o package.json está definido como este nome de arquivo para executar no "main".
 
+// ******************************** LEMBRANDO QUE A ORDEM IMPORTA DAS REQUISIÇÕES *********************************
+
 //Obs: para executar esse Index.js, tem que abrir o termina e colocar "node index.js" para começar a executar
 //Obs2: Para termina a execução é só aperta ctrl+c
 //Obs3: NODEMON utilizado apenas para ambiente de "dev", ele é utilizado para identificar os arquivos e reinicia automaticamente aplicação em vez de digitar "node"
@@ -8,8 +10,19 @@
 // Criação de uma constante do Express
 const express = require("express");
 
-//Instancia o express para que seja a  nossa aplicação para realizar requisições e outros
+//Instancia o express para que seja utilizado na nossa aplicação para realizar requisições e outros
 const app = express();
+
+// Instanciando o bodyparse para que possamos utilizar ele nas requisições
+const bodyParser = require('body-parser')
+
+//[Sempre Colocar em primeiro lugar] trecho que interpreta todo tipo de texto, todas as requisições que forem retorno de texto ele vai ser interpretado
+app.use(bodyParser.text());
+// Todo retorno vai ser interpretado com json sem precisar coloca "res.json()"
+app.use(bodyParser.json());
+
+//Interpreta a URLENCODED ex: "relatorio?completo=true&ano=2018" isso é o urlencoded (lembrando que esse URLENDODED é como vem de um formulario do front-end)
+app.use(bodyParser.urlencoded({extended: true}))
 
 /* 
 
@@ -39,6 +52,49 @@ app.use("/opa", (req, res, next) => {
 // Utilizando a função middleware que criei "saudacaomid"
 const saudacao = require('./saudacaoMid');
 app.use(saudacao('Guilherme'));
+
+/* Por questão de Ordem esse get vem primeiro, pois o get que tem o "":id", ele vai entrar nele por passar qualquer parametro, então ele iria entender que
+ o "/relatorio" seria um Id e não como estamos querendo desenvolver ele. Por esse motivo vem primeiro. */
+app.get('/clientes/relatorio', (req, res) => {
+
+        // O trecho abaixo estou utilizando o "query" para que eu consiga pegar o que está sendo passado na URL referente ao "completo" e "ano"
+        // URL utilizada: http://localhost:3000/clientes/relatorio?completo=true&ano=2018
+      res.send(`Cliente relatório: completo = ${req.query.completo} ano = ${req.query.ano}`)
+})
+
+/* Criando um post que obtem os dados e depois envia os dados  */
+app.post('/corpo', (req, res) => {
+
+  /* - Forma menos usada: 
+   let corpo = ''
+   // Obtendo os dados que está vindo dessa chamada pela nomeclatura abaixo "req.on('data', function(varParte){varCorpo += varParte})"
+   req.on('data', function(parte){
+        corpo += parte
+   })
+
+   // Enviando os dados que foram tratados ou algo do tipo que está vindo dessa chamada pela nomeclatura abaixo "req.on('end', function(){res.send(varCorpo)})"
+   req.on('end', function(){
+      res.send(corpo)
+
+      // Em caso de você ter um dado JSOn e retorna ele enviando um JSON seria nomeclatura abaixo 
+          //res.json(JSON.parse(corpo));
+   }) */
+
+  // - Forma mais usada
+    res.send(req.body)
+
+})
+
+
+// Utilizando parametros na requisição
+// Obs: o ":" abaixo significa que você pode passar qualquer nome no lugar do Id
+//  Obs2: essa parte ":id" - Significado de parametro dá URL
+app.get('/clientes/:id', (req, res) => {
+        // Para conseguir o Id que está sendo passado na URL é preciso colocar "req.params.nomeDoParametroDaURL"
+    res.send(`Cliente ${req.params.id} selecionado!`);
+})
+
+
 
 /* Para que aplicação faça apenas o método especifico (GET ou POST), alterar a função "use" para GET ou POST utilizar a nomeclatura: */
 app.get("/opa", (req, res, next) => {
