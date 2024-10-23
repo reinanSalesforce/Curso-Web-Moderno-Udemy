@@ -16,6 +16,26 @@ const app = express();
 // Instanciando o bodyparse para que possamos utilizar ele nas requisições
 const bodyParser = require('body-parser')
 
+//Importando o modulo de Api - Produto sem usar const e o parentese depois do require é os parametros dessa função
+// O mais utilizado
+require('./Api/produto')(app, 'com param!')
+/*
+
+OU se quiser usar Const
+const produtoApi = require('./Api/produto')
+produtoApi(app, 'com param!')
+
+*/
+
+//Importando a nossa API de usuário
+const usuarioApi = require('./Api/usuario')
+
+// Informando que quando for POST ele vai para a função salvar 
+app.post('/usuario', usuarioApi.salvar)
+// Informando que quando for GET ele vai para a função obter
+app.get('/usuario', usuarioApi.obter)
+
+
 //[Sempre Colocar em primeiro lugar] trecho que interpreta todo tipo de texto, todas as requisições que forem retorno de texto ele vai ser interpretado
 app.use(bodyParser.text());
 // Todo retorno vai ser interpretado com json sem precisar coloca "res.json()"
