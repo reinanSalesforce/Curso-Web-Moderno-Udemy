@@ -16,6 +16,7 @@ class CicloFinanceiro {
         this.lancamentos = []
     }
 
+    // 3 pontinho mais o objeto faz com que ele crie uma copia do objeto Original
     addLancamentos(...lancamentos){
         // utilizou o array "lancamentos" e fez um forEach para percorrer o array e adiciona ao mesmo dando push
         lancamentos.forEach(l => this.lancamentos.push(l))
