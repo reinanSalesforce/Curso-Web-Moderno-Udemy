@@ -40,6 +40,28 @@ app.post('/produtos', (req, res, next) => {
     res.send(produto)
 })
 
+// Alterar um produto
+app.put('/produtos/:id', (req, res, next) => {
+    // chamando a função do arquivo bancoDeDados e passando com parametro um objeto
+    const produto = bancoDeDados.salvarProduto({
+        id: req.params.id,
+        nome: req.body.nome,
+        preco: req.body.preco
+    })
+
+    //me retorna uma resposta que seria o proprio produto
+    res.send(produto)
+})
+
+// Deletar um produto especifico
+app.delete('/produtos/:id', (req, res, next) => {
+    // chamando a função do arquivo bancoDeDados e passando com parametro um objeto
+    const produto = bancoDeDados.excluirProdutos(req.params.id)
+
+    //me retorna uma resposta que seria o proprio produto
+    res.send(produto)
+})
+
 // Utilizado para informar a portal que vai ser executada.
 app.listen(porta, () =>{
         // Foi feito uma função de callback para informar onde está executando se está correto
