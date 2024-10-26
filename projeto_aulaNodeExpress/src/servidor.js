@@ -6,14 +6,39 @@ const express = require('express');
 const app = express();
 
 
+// importe do arquivo de banco de dados
+const bancoDeDados = require('./bancoDeDados')
 
-// Lembrando que /produtos vai depender do que você quer que seja o nome
-// Testa de requisição se está tudo OK o servidor
+//Adicionando o Body-parse
+const bodyparse = require('body-parser');
+// E informando que todas as requisções(get, post, put e etc) vão poder usar o urlEncoded
+app.use(bodyparse.urlencoded({extended: true}))
+
+
 app.get('/produtos', (req, res, next) => {
-    // Sempre mandar um res.send para enviar uma resposta para saber como está se comportando
-    res.send({ nome: 'Notebook', preco: 123.45}) // Converte automaticamente em JSON
+    // Vai me retorna todos os produtos existentes
+    res.send(bancoDeDados.getProdutos()) // Converte automaticamente em JSON
 })
 
+// Lembrando que o ":id" significa o params dá requisição, então se digitar 1 e tiver um produto com ID = 1, ele vai retornar aquele produto.
+app.get('/produtos/:id', (req, res, next) => {
+    // Vai me retorna o produto que especifiquei no ":id", utilizando o "req.params.id"
+    res.send(bancoDeDados.getProduto(req.params.id)) 
+})
+
+// Salvar um novo produto
+app.post('/produtos', (req, res, next) => {
+    // chamando a função do arquivo bancoDeDados e passando com parametro um objeto
+    const produto = bancoDeDados.salvarProduto({
+        /* pegando de acordo com a requisição e esse processo só vai pegar se você estiver com a biblioteca de body-parse e ter definido a constante do mesmo, além 
+        do urlencoded */
+        nome: req.body.nome,
+        preco: req.body.preco
+    })
+
+    //me retorna uma resposta que seria o proprio produto
+    res.send(produto)
+})
 
 // Utilizado para informar a portal que vai ser executada.
 app.listen(porta, () =>{
