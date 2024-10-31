@@ -15,4 +15,5 @@ console.log(total1 / alunos.length);
 const getNota = aluno => aluno.nota
 const soma = (total, atual) => total + atual
 const total2 = alunos.map(getNota).reduce(soma)
+console.log('eee' + total2)
 console.log(total2 / alunos.length)
