@@ -8,18 +8,16 @@ const axios = require('axios');
 //Após é realizado um ".then" como se fosse um try/catch e dentro dele criando uma função de retorno
 // e de acordo com os dados que vem de "data" voce^pode manipular.
 axios.get(url).then(response =>{
-    const mulher = e => e.genero = 'F';
+    const mulher = e => e.genero === 'F';
 
-    const pais = e => e.pais = 'China';
+    const pais = e => e.pais === 'China';
+    // Reduce acessando um valor do objeto
+    const menorSalario = (funcAcumulador, funcAtual) =>{
+        return funcAcumulador.salario < funcAtual.salario ? funcAcumulador : funcAtual
+    }
 
     // Filtrando por apenas mulher, pelo pais china e pelo menor salario
-    const funcionarios = response.data.filter(mulher).filter(pais).reduce(function(acumulador, atual){
-        if(atual < acumulador){
-            return atual;
-        }else{
-            return acumulador;
-        }
-    }); 
+    const funcionarios = response.data.filter(mulher).filter(pais).reduce(menorSalario);
 
     console.log(funcionarios);
 }).catch((error) =>{
