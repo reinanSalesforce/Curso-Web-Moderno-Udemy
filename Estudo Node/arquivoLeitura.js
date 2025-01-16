@@ -25,3 +25,6 @@ fs.readdir(__dirname, (err, arquivos) =>{
     console.log('Conteudo da pasta...')
     console.log(arquivos);
 })
+
+
+//OBS: __dirname (informa o diretório atual que está sendo executado o código)
