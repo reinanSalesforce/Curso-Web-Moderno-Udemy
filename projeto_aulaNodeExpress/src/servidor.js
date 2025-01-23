@@ -22,7 +22,7 @@ app.use((req, res, next)=>{
 })*/
 
 
-// importe do arquivo de banco de dados
+// importe do arquivo de banco de dados para que eu possa usufruir dos metodos dentro desse arquivo
 const bancoDeDados = require('./bancoDeDados')
 
 //Adicionando o Body-parse
