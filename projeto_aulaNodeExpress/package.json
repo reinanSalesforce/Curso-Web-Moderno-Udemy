@@ -1,7 +1,7 @@
 {
   "name": "projeto_aulanodeexpress",
   "version": "1.0.0",
-  "main": "src/servidor.js",
+  "main": "src/servidor2.js",
   "scripts": {
     "start": "nodemon",
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -12,8 +12,10 @@
   "description": "",
   "dependencies": {
     "body-parse": "0.1.0",
-    "body-parser": "^1.20.3",
-    "express": "4.21.1",
-    "nodemon": "3.1.7"
+    "body-parser": "1.20.3",
+    "express": "4.21.1"
+  },
+  "devDependencies": {
+    "nodemon": "3.1.9"
   }
 }

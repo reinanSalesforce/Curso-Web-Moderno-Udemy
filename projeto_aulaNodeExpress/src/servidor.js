@@ -5,6 +5,22 @@ const porta = 3003
 const express = require('express');
 const app = express();
 
+/*
+FUNÇÃO MIDDLEWARE COM NEXT
+app.get('/produto', (req, res, next)=>{
+    console.log('Middleware....1');
+    next();
+});
+
+app.get('/produto',(req, res, next)=>{
+    res.send({nome: 'Notebook', preco: 123.45});
+})*/
+
+/*  Sem informar o barramento e utilizando o "app.use", qualquer barramento que eu colocar na URL ele vai executar o que está abaixo
+app.use((req, res, next)=>{
+    res.send({nome : 'Notebook', preco : 123.45})
+})*/
+
 
 // importe do arquivo de banco de dados
 const bancoDeDados = require('./bancoDeDados')
