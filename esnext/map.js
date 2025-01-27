@@ -9,7 +9,8 @@ console.log(tecnologia.react);
 // Só pega o valor se for assim, constanteMap.get('CHAVE').valor
 console.log(tecnologia.get('react').framework);
 
-// No map você pode colocar diversos tipos, desde função até objeto
+// No map você pode colocar diversos tipos, desde função até objeto. 
+// Utilizando ([ [aqui dentro chave e valor] ])
 const chavesVariadas = new Map([
     [function () {}, 'Função'],
     [{}, 'Objeto'],
