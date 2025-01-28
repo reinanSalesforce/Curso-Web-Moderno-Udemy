@@ -16,5 +16,5 @@ p.then(function(valor){
     console.log(valor.x);
 })
 
-// Jeito mais simples utilizando a função arrom
+// Jeito mais simples utilizando a função arrow
 p.then(valor => console.log(valor));
