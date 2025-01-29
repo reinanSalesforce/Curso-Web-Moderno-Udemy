@@ -10,7 +10,24 @@
     <div>Segundo</div>
     <div class="terceiro ultimo">.terceiro .ultimo</div>
     <script>              
-        // ...
+        // pegando o valor pelo "id"
+        document.getElementById('primeiro').classList.add('destaque')
+
+        // pegando pela tag, nesse caso todas as tags de "div"
+        const divs = document.getElementsByTagName('div')
+        // Criando um array e colocando pra cada div que tiver o destaque
+        Array.from(divs).forEach(e => e.classList.remove('destaque'))
+
+        // OU posso transformar as divs em um spread que reuni tudo em um array
+        const divsArrays = [...divs]
+        // e depois fazer o mesmo procedimento de acessar o array
+        divsArrays.forEach(e => e.classList.add('destaque'))
+
+        // vai pegar todos os valores que tiverem o nome "ultimo" na variavel "class" no HTML
+        const ultimosElementos = document.getElementsByClassName('ultimo')
+        for(let e of ultimosElementos){
+            e.classList.remove('destaque')
+        }
     </script>
 </body>
 </html>
