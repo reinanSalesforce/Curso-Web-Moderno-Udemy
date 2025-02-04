@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset='UTF-8'>
+    <title>XMLHttpRequest #01</title>
+    <link rel='stylesheet' href='css/estilo.css'>
+</head>
+
+<body class="conteudo exercicio">
+    <h1>Estados</h1>
+
+    <script>
+        // FUNÇÃO PARA LER JSON
+        /* Parametro "config", vai ser um objeto que vai conter todas as informações que preciso para requisição para que eu consiga chamar 
+        dentro dá função, em vez de passar nomes e etc... */
+        function ajax(config){
+            const xhr = new XMLHttpRequest()
+            // Vou abrir uma requisição varXML.open("Method", parametro.url , true(informando que vai ser assincrona))
+            xhr.open(config.metodo, config.url, true)
+
+            // Função que vai tratar o meu retorno
+            xhr.onload = e =>{
+                if(xhr.status === 200){
+                    config.sucesso(xhr.response)
+                }else if( xhr.status >= 400){
+                    config.erro({
+                        codigo: xhr.status,
+                        texto: xhr.statusText
+                    })
+                }
+            }
+
+            // Funçõa de envio
+            xhr.send()
+        }
+
+        // Função criada fora do método sucesso para que não fique grande
+        function criarTabela(estados){
+            // Constante que já filtra e já criar uma coluna na table do que está vindo de resposta (ELEMENTO DÁ DOM)
+            const linhas = estados.map(estado =>{
+                // Criando coluna Id dá table, onde utiliza o document.createElement('td') e informando o valor que vem da variavel "estado"
+                const tdId = document.createElement('td')
+                tdId.innerHTML = estado.id
+
+                // Criando coluna Nome dá table, onde utiliza o document.createElement('td') e informando o valor que vem da variavel "estado"
+                const tdNome = document.createElement('td')
+                tdNome.innerHTML = estado.nome
+
+                const tdSigla = document.createElement('td')
+                tdSigla.innerHTML = estado.sigla
+
+                // Adicionando as linhas agora as minhas "td"
+                const tr = document.createElement('tr')
+
+                // adicionando as três td no tr
+                tr.appendChild(tdId);
+                tr.appendChild(tdNome);
+                tr.appendChild(tdSigla);
+
+                return tr
+            })
+
+            // Adicionando todas as linhas a tabela
+            const tabela = document.createElement('table')
+            linhas.forEach(linha => tabela.appendChild(linha))
+            // adicionando ao BODY do HTML a tabela
+            document.body.appendChild(tabela)
+        }
+
+        // Chamando a função AJAX passando o objeto como parametro com os valores de "metodo, url, sucesso e erro"
+        ajax({
+            url: "dados/estados.json",
+            metodo: "get",
+            //Função de sucesso que é chamada lá na função AJAX
+            sucesso(resposta){
+                // Constante que já trata a resposta que está vindo dá URL
+                const estados = JSON.parse(resposta);
+                criarTabela(estados);
+                
+            },
+            // Função erro que é chamada lá na função AJAX
+            erro(e) {
+                const msg = document.createTextNode(`${e.codigo} : ${e.texto}`)
+                //adicionando a mensagem de erro no body
+                document.body.appendChild(msg)
+            }
+        })
+    </script>
+</body>
