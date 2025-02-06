@@ -12,6 +12,16 @@
     <h1>Estados</h1>
 
     <script>
-        // ...
+        // A diferença de Axios pro Fetch é que o AXIOS não preciso informar que o meu response vire um JSON, porque ele já vem 
+        // E para pegar os valores utilizados o resp.data que vem todos os valores
+        const url = 'dados/estados.json'
+        axios(url).then(resp => { 
+            const itens = resp.data.reduce(
+                (html, estado) => html + `<li>${estado.nome}</li>`, ''
+
+            )
+            document.body.insertAdjacentHTML('beforeend', `<ul>${itens}</ul>`)
+
+        })
     </script>
 </body>

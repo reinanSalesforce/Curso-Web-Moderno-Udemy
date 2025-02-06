@@ -29,6 +29,46 @@
     </form>
     <div id="resultado"></div>
     <script>
-        // ...
+        // Estou pegando o meu formulario definido pelo "name" "usuarioForm" e pegando ação do submit para mudar 
+        document.usuarioForm.onsubmit = async e =>{
+            // para PARAR o padrão do submit preciso utilizar o comando abaixo
+            e.preventDefault()
+
+            // constante utilizada para pegar quem está acionando e conseguir apartir dele manipular variaveis que existem nele como (nome, action e method)
+            const form = e.target
+            const data = new FormData(form)
+            // Maneira de adicionar valores ao FormData utilizando NomeConstante.append(valor, true)
+            data.append('ajax', true)
+
+            // Para que consiga comunicar com o BACKEND é preciso utilizar no body "new URLSearchParams(varDoFormData)"
+            const options = {
+                method: form.method,
+                body: new URLSearchParams(data)
+            }
+
+            //Constante criada para pegar o valor dá tag "div com o Id=resultado" para após utilizar pra setar os valores
+            const resultado = document.getElementById('resultado')
+            /* Chamando o fetch passando como parametro o action do HTML e options 
+            fetch(form.action, options)
+                .then(resp => resp.json())
+                .then(json => {
+                    resultado.innerHTML = JSON.stringify(json)
+                })
+                .catch(e =>{
+                    resultado.innerHTML = e;
+                })*/
+
+            // Utilizando o async await em vez do fetch apenas
+            try{
+                // Constante que chama o fetch, utilizando sempre o "await"
+                const resp = await fetch(form.action, options)
+                // Consntante que transforma em JSON o retorno do RESP 
+                const json = await resp.json()
+                // Por ultimo mandando os valores para a tag do HTML
+                resultado.innerHTML = JSON.stringify(json)
+            }catch (e) {
+                resultado.innerHTML = e
+            }
+        }
     </script>
 </body>

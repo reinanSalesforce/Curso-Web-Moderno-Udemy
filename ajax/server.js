@@ -43,6 +43,23 @@ app.post('/upload', (req, resp) =>{
     })
 })
 
+// Post para o Fetch
+app.post('/formulario', (req, resp) =>{
+    // Enviando um spread com tudo que tem no body sendo nome, sobrenome e etc... e o mesmo só vai dá certo se tiver definido lá em cima as configs do bodyparser
+    resp.send({
+        ...req.body, 
+        id: 7
+    })
+})
+
+// Get para o Axios
+app.get('/parOuImpar', (req, resp) =>{
+    // Para interagir com o frontEnd utilizamos 3 tipos: req.body, req.query, req.params (podemos utilizar /nome/:params)
+    const par = parseInt(req.query.numero) % 2 === 0
+    resp.send({
+        resultado: par ? 'par' : 'impar'
+    })
+})
 
 // Informando a porta que o servidor vai starta
 app.listen(8080, () => console.log('Executando...'))

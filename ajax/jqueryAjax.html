@@ -14,6 +14,37 @@
     <div id="post"></div>
 
     <script>
-        // ...
+        function exibirResultado(id, dados){
+            // Transformando os dados em String
+            const texto = JSON.stringify(dados)
+            //Mandando para as divs do HTML 
+            document.getElementById(id).innerHTML = texto
+        }
+
+        // Função jquery utilizamos $.nomeFunção e dentro fazemos um objeto passando os parametros 
+        $.ajax({
+            url: 'parOuImpar',
+            data: {
+                numero: 5
+            }, 
+            success(data){
+                exibirResultado('get', data)
+            }
+        })
+
+        $.ajax({
+            url: 'formulario',
+            method: 'post',
+            data: {
+                nome: 'João',
+                sobrenome: 'Silva'
+            },
+            success(data){
+                exibirResultado('post', data)
+            },
+            error(e){
+                exibirResultado('post', e)
+            }
+        })
     </script>
 </body>

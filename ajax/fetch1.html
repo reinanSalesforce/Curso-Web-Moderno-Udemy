@@ -11,6 +11,16 @@
     <h1>Estados</h1>
 
     <script>
-        // ...
+        // Para o Fetch você define uma variavel que contem a URL e depois você chama ela "fetch(url)" passando um ".then" depois e encadeando os thens
+        // foi criado uma função resp que retorna um json e apartir desse retorno eu fiz outro then para tratar o array que foi retornado 
+        const url = 'dados/estados.json'
+        fetch(url)
+            .then(resp => resp.json())
+            .then(estados => {
+                const itens = estados.reduce(
+                    (html, estado) => html + `<li>${estado.nome}</li>`, ''
+                )
+                document.body.insertAdjacentHTML('beforeend', `<ul>${itens}</ul>`)
+            })
     </script>
 </body>
