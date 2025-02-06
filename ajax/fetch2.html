@@ -5,6 +5,8 @@
     <meta charset='UTF-8'>
     <title>Fetch API #02</title>
     <link rel='stylesheet' href='css/estilo.css'>
+    <script src="js/axios.js"></script>
+
     <style>
         form {
             display: flex;
@@ -23,8 +25,8 @@
 <body class="conteudo exercicio">
     <h1>Formulário Via Fetch</h1>
     <form name="usuarioForm" action="formulario" method="post">
-        <input type="text" name="nome" placeholder="Nome..." />
-        <input type="text" name="sobrenome" placeholder="Sobrenome..." />
+        <input type="text" id="nome" name="nome" placeholder="Nome..." />
+        <input type="text" id="sobrenome" name="sobrenome" placeholder="Sobrenome..." />
         <button>Salvar</button>
     </form>
     <div id="resultado"></div>
@@ -34,20 +36,35 @@
             // para PARAR o padrão do submit preciso utilizar o comando abaixo
             e.preventDefault()
 
+            /* AXIOS
+            const formData = new FormData(e.target);
+            const nome = formData.get("nome");
+            const sobrenome = formData.get("sobrenome");
+            const dados = {nome, sobrenome};
+
+            const resultado = document.getElementById('resultado')
+
+            
+            console.log(dados)
+            axios.post('formulario', dados)
+                .then(resp => resultado.innerHTML = JSON.stringify(resp.data))
+                .catch(e => console.log(e))*/
+
+                /* FETCH */
             // constante utilizada para pegar quem está acionando e conseguir apartir dele manipular variaveis que existem nele como (nome, action e method)
-            const form = e.target
-            const data = new FormData(form)
+          const form = e.target
+          const data = new FormData(form)
             // Maneira de adicionar valores ao FormData utilizando NomeConstante.append(valor, true)
-            data.append('ajax', true)
+          data.append('ajax', true)
 
             // Para que consiga comunicar com o BACKEND é preciso utilizar no body "new URLSearchParams(varDoFormData)"
-            const options = {
+           const options = {
                 method: form.method,
-                body: new URLSearchParams(data)
+               body: new URLSearchParams(data)
             }
 
             //Constante criada para pegar o valor dá tag "div com o Id=resultado" para após utilizar pra setar os valores
-            const resultado = document.getElementById('resultado')
+           //const resultado = document.getElementById('resultado')
             /* Chamando o fetch passando como parametro o action do HTML e options 
             fetch(form.action, options)
                 .then(resp => resp.json())
@@ -69,6 +86,8 @@
             }catch (e) {
                 resultado.innerHTML = e
             }
+
+            
         }
     </script>
 </body>
