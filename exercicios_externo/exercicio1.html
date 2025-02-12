@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset='UTF-8'>
+    <title>Exercicio1</title>
+</head>
+
+<body class="conteudo exercicio">
+    <h1 id="titulo">Exercicio Ajax 1</h1>
+    <div> 
+        <button onclick="handlerclick()"> Clicar </button>
+        <button onclick="handlerclickUser()"> Clicar User</button>
+
+    </div>
+
+    <script>
+        function handlerclick(){
+            const url = 'https://jsonplaceholder.typicode.com/posts/1'
+            fetch(url)
+                .then(response => response.json())
+                .then(showTela =>  
+                    document.getElementById('titulo').innerHTML = JSON.stringify(showTela)
+                )
+                .catch(error => console.log('error'))
+        }
+
+        function handlerclickUser(){
+            const url = '/usuarios'
+            fetch(url)
+                .then(response => response.json())
+                .then(itens => itens.forEach(nome => console.log(nome)))
+                .catch(error => console.log('error'))
+        }
+
+
+
+    </script>
+</body>
